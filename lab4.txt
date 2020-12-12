@@ -1,0 +1,346 @@
+Microsoft Windows [Version 10.0.18363.1256]
+(c) Корпорация Майкрософт (Microsoft Corporation), 2019. Все права защищены.
+
+C:\Users\User10>aws elbv2 create-load-balancer --name DmytroELB --type application --scheme internet-facing --subnets subnet-b90858f4 subnet-bd2852b3 --security-groups sg-26ed7812
+{
+    "LoadBalancers": [
+        {
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:871533708305:loadbalancer/app/DmytroELB/eee216ae6e12f6f8",
+            "DNSName": "DmytroELB-1468782836.us-east-1.elb.amazonaws.com",
+            "CanonicalHostedZoneId": "Z35SXDOTRQ7X7K",
+            "CreatedTime": "2020-12-12T11:39:02.100000+00:00",
+            "LoadBalancerName": "DmytroELB",
+            "Scheme": "internet-facing",
+            "VpcId": "vpc-9431ece9",
+            "State": {
+                "Code": "provisioning"
+            },
+            "Type": "application",
+            "AvailabilityZones": [
+                {
+                    "ZoneName": "us-east-1a",
+                    "SubnetId": "subnet-b90858f4",
+                    "LoadBalancerAddresses": []
+                },
+                {
+                    "ZoneName": "us-east-1f",
+                    "SubnetId": "subnet-bd2852b3",
+                    "LoadBalancerAddresses": []
+                }
+            ],
+            "SecurityGroups": [
+                "sg-26ed7812"
+            ],
+            "IpAddressType": "ipv4"
+        }
+    ]
+}
+
+
+C:\Users\User10>
+C:\Users\User10>
+C:\Users\User10>
+C:\Users\User10>
+C:\Users\User10>
+C:\Users\User10>
+C:\Users\User10>aws elbv2 create-target-group --name dmytro-targets --protocol HTTP --port 80 \
+usage: aws [options] <command> <subcommand> [<subcommand> ...] [parameters]
+To see help text, you can run:
+
+  aws help
+  aws <command> help
+  aws <command> <subcommand> help
+
+Unknown options: \
+
+C:\Users\User10>aws ec2 authorize-security-group-ingress --group-id sg-26ed7812 --protocol tcp --port 80 --cidr 0.0.0.0/0
+
+
+C:\Users\User10>aws ec2 authorize-security-group-ingress --group-id sg-26ed7812 --protocol tcp --port 22 --cidr 0.0.0.0/0
+
+
+C:\Users\User10>aws elbv2 set-security-groups --load-balancer-arn arn:aws:elasticloadbalancing:us-east-1:871533708305:loadbalancer/app/DmytroELB/eee216ae6e12f6f8 --security-groups sg-26ed7812
+{
+    "SecurityGroupIds": [
+        "sg-26ed7812"
+    ]
+}
+
+
+C:\Users\User10>aws ec2 run-instances --image-id ami-04d29b6f966df1537 --count 2 --instance-type t2.micro --key-name KeyLab9 --associate-public-ip-address --security-group-ids sg-26ed7812
+
+An error occurred (InvalidKeyPair.NotFound) when calling the RunInstances operation: The key pair 'KeyLab9' does not exist
+
+C:\Users\User10>aws ec2 run-instances --image-id ami-04d29b6f966df1537 --count 2 --instance-type t2.micro --key-name DmytroKey3 --associate-public-ip-address --security-group-ids sg-26ed7812
+{
+    "Groups": [],
+    "Instances": [
+        {
+            "AmiLaunchIndex": 1,
+            "ImageId": "ami-04d29b6f966df1537",
+            "InstanceId": "i-024dde684f36e7304",
+            "InstanceType": "t2.micro",
+            "KeyName": "DmytroKey3",
+            "LaunchTime": "2020-12-12T11:51:52+00:00",
+            "Monitoring": {
+                "State": "disabled"
+            },
+            "Placement": {
+                "AvailabilityZone": "us-east-1b",
+                "GroupName": "",
+                "Tenancy": "default"
+            },
+            "PrivateDnsName": "ip-172-31-35-22.ec2.internal",
+            "PrivateIpAddress": "172.31.35.22",
+            "ProductCodes": [],
+            "PublicDnsName": "",
+            "State": {
+                "Code": 0,
+                "Name": "pending"
+            },
+            "StateTransitionReason": "",
+            "SubnetId": "subnet-cc29ab93",
+            "VpcId": "vpc-9431ece9",
+            "Architecture": "x86_64",
+            "BlockDeviceMappings": [],
+            "ClientToken": "c153b6e2-408a-432c-9981-065654065cf2",
+            "EbsOptimized": false,
+            "EnaSupport": true,
+            "Hypervisor": "xen",
+            "NetworkInterfaces": [
+                {
+                    "Attachment": {
+                        "AttachTime": "2020-12-12T11:51:52+00:00",
+                        "AttachmentId": "eni-attach-0c294c20b4027c27e",
+                        "DeleteOnTermination": true,
+                        "DeviceIndex": 0,
+                        "Status": "attaching"
+                    },
+                    "Description": "",
+                    "Groups": [
+                        {
+                            "GroupName": "default",
+                            "GroupId": "sg-26ed7812"
+                        }
+                    ],
+                    "Ipv6Addresses": [],
+                    "MacAddress": "0e:58:14:04:30:fd",
+                    "NetworkInterfaceId": "eni-00ae461e671aee69c",
+                    "OwnerId": "871533708305",
+                    "PrivateDnsName": "ip-172-31-35-22.ec2.internal",
+                    "PrivateIpAddress": "172.31.35.22",
+                    "PrivateIpAddresses": [
+                        {
+                            "Primary": true,
+                            "PrivateDnsName": "ip-172-31-35-22.ec2.internal",
+                            "PrivateIpAddress": "172.31.35.22"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "Status": "in-use",
+                    "SubnetId": "subnet-cc29ab93",
+                    "VpcId": "vpc-9431ece9",
+                    "InterfaceType": "interface"
+                }
+            ],
+            "RootDeviceName": "/dev/xvda",
+            "RootDeviceType": "ebs",
+            "SecurityGroups": [
+                {
+                    "GroupName": "default",
+                    "GroupId": "sg-26ed7812"
+                }
+            ],
+            "SourceDestCheck": true,
+            "StateReason": {
+                "Code": "pending",
+                "Message": "pending"
+            },
+            "VirtualizationType": "hvm",
+            "CpuOptions": {
+                "CoreCount": 1,
+                "ThreadsPerCore": 1
+            },
+            "CapacityReservationSpecification": {
+                "CapacityReservationPreference": "open"
+            },
+            "MetadataOptions": {
+                "State": "pending",
+                "HttpTokens": "optional",
+                "HttpPutResponseHopLimit": 1,
+                "HttpEndpoint": "enabled"
+            },
+            "EnclaveOptions": {
+                "Enabled": false
+            }
+        },
+        {
+            "AmiLaunchIndex": 0,
+            "ImageId": "ami-04d29b6f966df1537",
+            "InstanceId": "i-041fccb24b6173197",
+            "InstanceType": "t2.micro",
+            "KeyName": "DmytroKey3",
+            "LaunchTime": "2020-12-12T11:51:52+00:00",
+            "Monitoring": {
+                "State": "disabled"
+            },
+            "Placement": {
+                "AvailabilityZone": "us-east-1b",
+                "GroupName": "",
+                "Tenancy": "default"
+            },
+            "PrivateDnsName": "ip-172-31-40-150.ec2.internal",
+            "PrivateIpAddress": "172.31.40.150",
+            "ProductCodes": [],
+            "PublicDnsName": "",
+            "State": {
+                "Code": 0,
+                "Name": "pending"
+            },
+            "StateTransitionReason": "",
+            "SubnetId": "subnet-cc29ab93",
+            "VpcId": "vpc-9431ece9",
+            "Architecture": "x86_64",
+            "BlockDeviceMappings": [],
+            "ClientToken": "c153b6e2-408a-432c-9981-065654065cf2",
+            "EbsOptimized": false,
+            "EnaSupport": true,
+            "Hypervisor": "xen",
+            "NetworkInterfaces": [
+                {
+                    "Attachment": {
+                        "AttachTime": "2020-12-12T11:51:52+00:00",
+                        "AttachmentId": "eni-attach-0acf6fcafa3bd7ae4",
+                        "DeleteOnTermination": true,
+                        "DeviceIndex": 0,
+                        "Status": "attaching"
+                    },
+                    "Description": "",
+                    "Groups": [
+                        {
+                            "GroupName": "default",
+                            "GroupId": "sg-26ed7812"
+                        }
+                    ],
+                    "Ipv6Addresses": [],
+                    "MacAddress": "0e:ec:21:89:bc:81",
+                    "NetworkInterfaceId": "eni-0ba4343eb397fbbb0",
+                    "OwnerId": "871533708305",
+                    "PrivateDnsName": "ip-172-31-40-150.ec2.internal",
+                    "PrivateIpAddress": "172.31.40.150",
+                    "PrivateIpAddresses": [
+                        {
+                            "Primary": true,
+                            "PrivateDnsName": "ip-172-31-40-150.ec2.internal",
+                            "PrivateIpAddress": "172.31.40.150"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "Status": "in-use",
+                    "SubnetId": "subnet-cc29ab93",
+                    "VpcId": "vpc-9431ece9",
+                    "InterfaceType": "interface"
+                }
+            ],
+            "RootDeviceName": "/dev/xvda",
+            "RootDeviceType": "ebs",
+            "SecurityGroups": [
+                {
+                    "GroupName": "default",
+                    "GroupId": "sg-26ed7812"
+                }
+            ],
+            "SourceDestCheck": true,
+            "StateReason": {
+                "Code": "pending",
+                "Message": "pending"
+            },
+            "VirtualizationType": "hvm",
+            "CpuOptions": {
+                "CoreCount": 1,
+                "ThreadsPerCore": 1
+            },
+            "CapacityReservationSpecification": {
+                "CapacityReservationPreference": "open"
+            },
+            "MetadataOptions": {
+                "State": "pending",
+                "HttpTokens": "optional",
+                "HttpPutResponseHopLimit": 1,
+                "HttpEndpoint": "enabled"
+            },
+            "EnclaveOptions": {
+                "Enabled": false
+            }
+        }
+    ],
+    "OwnerId": "871533708305",
+    "ReservationId": "r-0e8e2ab9bd83a0612"
+}
+
+
+C:\Users\User10>
+C:\Users\User10>
+C:\Users\User10>
+C:\Users\User10>aws elbv2 create-target-group --name Dmytro-Target-Group --target-type instance --protocol HTTP --port 80 --vpc-id vpc-9431ece9
+{
+    "TargetGroups": [
+        {
+            "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:871533708305:targetgroup/Dmytro-Target-Group/d366a6c26c7ab35e",
+            "TargetGroupName": "Dmytro-Target-Group",
+            "Protocol": "HTTP",
+            "Port": 80,
+            "VpcId": "vpc-9431ece9",
+            "HealthCheckProtocol": "HTTP",
+            "HealthCheckPort": "traffic-port",
+            "HealthCheckEnabled": true,
+            "HealthCheckIntervalSeconds": 30,
+            "HealthCheckTimeoutSeconds": 5,
+            "HealthyThresholdCount": 5,
+            "UnhealthyThresholdCount": 2,
+            "HealthCheckPath": "/",
+            "Matcher": {
+                "HttpCode": "200"
+            },
+            "TargetType": "instance",
+            "ProtocolVersion": "HTTP1"
+        }
+    ]
+}
+
+
+C:\Users\User10>aws elbv2 register-targets --target-group-arn arn:aws:elasticloadbalancing:us-east-1:871533708305:targetgroup/Dmytro-Target-Group/d366a6c26c7ab35e --targets Id=i-024dde684f36e7304 Id=i-041fccb24b6173197
+
+
+C:\Users\User10>aws elbv2 create-listener --load-balancer-arn arn:aws:elasticloadbalancing:us-east-1:871533708305:loadbalancer/app/DmytroELB/eee216ae6e12f6f8 --protocol HTTP --port 80 --default-actions Type=forward,TargetGroupArn=arn:aws:elasticloadbalancing:us-east-1:871533708305:targetgroup/Dmytro-Target-Group/d366a6c26c7ab35e
+{
+    "Listeners": [
+        {
+            "ListenerArn": "arn:aws:elasticloadbalancing:us-east-1:871533708305:listener/app/DmytroELB/eee216ae6e12f6f8/c03411a03f0ff9fe",
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:871533708305:loadbalancer/app/DmytroELB/eee216ae6e12f6f8",
+            "Port": 80,
+            "Protocol": "HTTP",
+            "DefaultActions": [
+                {
+                    "Type": "forward",
+                    "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:871533708305:targetgroup/Dmytro-Target-Group/d366a6c26c7ab35e",
+                    "ForwardConfig": {
+                        "TargetGroups": [
+                            {
+                                "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:871533708305:targetgroup/Dmytro-Target-Group/d366a6c26c7ab35e",
+                                "Weight": 1
+                            }
+                        ],
+                        "TargetGroupStickinessConfig": {
+                            "Enabled": false
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+
+C:\Users\User10>
+C:\Users\User10>
